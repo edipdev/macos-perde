@@ -55,8 +55,14 @@ Dock'ta ikonu yoktur.
 **Hazır uygulama:** [**Perde-0.1.0.dmg indir**](https://github.com/edipdev/macos-perde/releases/download/0.1.0/Perde-0.1.0.dmg) →
 aç ve **Perde**'yi `Applications` klasörüne sürükle. (Tüm sürümler için [Releases](https://github.com/edipdev/macos-perde/releases).)
 
-> İlk açılışta uygulama imzasız olduğu için macOS uyarabilir: **Sistem Ayarları →
-> Gizlilik ve Güvenlik**'ten "Yine de Aç" deyin.
+> **İlk açılış (imzasız uygulama):** macOS "Apple doğrulayamadı, açılmadı" diyebilir. Bir
+> kez şu komutu çalıştırıp karantinayı kaldır, sonra normal aç:
+>
+> ```bash
+> xattr -dr com.apple.quarantine /Applications/Perde.app
+> ```
+>
+> Alternatif: **Sistem Ayarları → Gizlilik ve Güvenlik** → en alta in → **"Yine de Aç"**.
 
 **Kaynaktan derleme:**
 
