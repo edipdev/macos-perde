@@ -60,7 +60,7 @@ Dock'ta ikonu yoktur.
 
 ```bash
 git clone https://github.com/edipdev/macos-perde.git
-cd perde
+cd macos-perde
 make run
 ```
 
@@ -119,7 +119,7 @@ and open it.
 
 ```bash
 git clone https://github.com/edipdev/macos-perde.git
-cd perde
+cd macos-perde
 make run
 ```
 
