@@ -15,6 +15,7 @@ struct TranslationView: View {
     @State private var pendingText = ""
     @State private var lastConfigKey = ""
     @State private var detectedName = ""
+    @FocusState private var inputFocused: Bool
     @ObservedObject private var settings = SettingsStore.shared
 
     private let languages: [(code: String, name: String)] = [
@@ -155,6 +156,11 @@ struct TranslationView: View {
                 .padding(10)
                 .padding(.trailing, 18)
                 .background(Color.primary.opacity(0.07), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+                .focused($inputFocused)
+                .simultaneousGesture(TapGesture().onEnded {
+                    NSApp.makeNotchWindowKey()
+                    inputFocused = true
+                })
                 .onSubmit(translate)
             if !input.isEmpty {
                 Button { input = "" } label: {

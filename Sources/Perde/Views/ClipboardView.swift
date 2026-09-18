@@ -1,9 +1,11 @@
 import SwiftUI
+import AppKit
 
 struct ClipboardView: View {
     @ObservedObject var store: ClipboardStore
     @State private var query = ""
     @State private var showCopied = false
+    @FocusState private var searchFocused: Bool
 
     private var filtered: [ClipboardItem] {
         guard !query.isEmpty else { return store.ordered }
@@ -57,6 +59,11 @@ struct ClipboardView: View {
                 .textFieldStyle(.plain)
                 .font(.system(size: 12))
                 .foregroundStyle(Theme.primaryText)
+                .focused($searchFocused)
+                .simultaneousGesture(TapGesture().onEnded {
+                    NSApp.makeNotchWindowKey()
+                    searchFocused = true
+                })
             Spacer(minLength: 0)
             if store.items.contains(where: { !$0.pinned }) {
                 Button("Temizle") { store.clear() }

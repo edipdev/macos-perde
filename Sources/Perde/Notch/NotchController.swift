@@ -52,6 +52,7 @@ final class NotchController {
             window?.ignoresMouseEvents = false
             viewModel.isExpanded = true
         } else {
+            window?.resignKey()
             window?.ignoresMouseEvents = true
             viewModel.isExpanded = false
             viewModel.showLyrics = false
@@ -112,6 +113,7 @@ final class NotchController {
             let work = DispatchWorkItem { [weak self] in
                 guard let self else { return }
                 self.collapseWorkItem = nil
+                self.window?.resignKey()
                 self.window?.ignoresMouseEvents = true
                 self.viewModel.isExpanded = false
                 self.viewModel.showLyrics = false

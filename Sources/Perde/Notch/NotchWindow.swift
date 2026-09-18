@@ -10,6 +10,7 @@ final class NotchWindow: NSPanel {
         )
 
         isFloatingPanel = true
+        becomesKeyOnlyIfNeeded = true
         isMovable = false
         isMovableByWindowBackground = false
         hidesOnDeactivate = false
@@ -32,4 +33,13 @@ final class NotchWindow: NSPanel {
 
     override var canBecomeKey: Bool { true }
     override var canBecomeMain: Bool { false }
+}
+
+extension NSApplication {
+    /// Promotes the notch panel to key so its text fields can accept keyboard
+    /// input. Buttons never trigger this (see `becomesKeyOnlyIfNeeded`), so the
+    /// frontmost app stays active unless the user actually clicks a text field.
+    func makeNotchWindowKey() {
+        windows.first { $0 is NotchWindow }?.makeKey()
+    }
 }
