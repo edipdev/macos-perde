@@ -128,9 +128,8 @@ See the table above.
 
 ### ⬇️ Install
 
-**Prebuilt app:** download `Perde.app` from
-[Releases](https://github.com/edipdev/macos-perde/releases), move it to `/Applications`
-and open it.
+**Prebuilt app:** [**Download Perde-0.1.0.dmg**](https://github.com/edipdev/macos-perde/releases/download/0.1.0/Perde-0.1.0.dmg) →
+open it and drag **Perde** into your `Applications` folder. (All versions on [Releases](https://github.com/edipdev/macos-perde/releases).)
 
 #### ⚠️ Seeing "Perde.app can't be opened"?
 
