@@ -55,14 +55,26 @@ Dock'ta ikonu yoktur.
 **Hazır uygulama:** [**Perde-0.1.0.dmg indir**](https://github.com/edipdev/macos-perde/releases/download/0.1.0/Perde-0.1.0.dmg) →
 aç ve **Perde**'yi `Applications` klasörüne sürükle. (Tüm sürümler için [Releases](https://github.com/edipdev/macos-perde/releases).)
 
-> **İlk açılış (imzasız uygulama):** macOS "Apple doğrulayamadı, açılmadı" diyebilir. Bir
-> kez şu komutu çalıştırıp karantinayı kaldır, sonra normal aç:
->
-> ```bash
-> xattr -dr com.apple.quarantine /Applications/Perde.app
-> ```
->
-> Alternatif: **Sistem Ayarları → Gizlilik ve Güvenlik** → en alta in → **"Yine de Aç"**.
+#### ⚠️ "Perde.app Açılmadı" uyarısı alıyorsan
+
+Uygulama **imzasız** (ücretli Apple geliştirici sertifikası yok) olduğu için macOS,
+indirilen dosyaya karantina koyar ve _"Apple, kötü amaçlı yazılım içermediğini
+doğrulayamadı"_ diyerek açmayı engeller. Zararsızdır — bir kez izin vermen yeterli.
+İki yoldan biriyle:
+
+**Yöntem 1 — Terminal (en garanti):** Perde'yi `Applications`'a taşıdıktan sonra
+Terminal'de şu komutu çalıştır, sonra uygulamayı normal aç:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Perde.app
+```
+
+**Yöntem 2 — Ayarlar:** Uyarıda **Bitti**'ye bas → **Sistem Ayarları → Gizlilik ve
+Güvenlik**'i aç → en alta in → "Perde.app engellendi" satırındaki **"Yine de Aç"**a
+bas → çıkan pencerede tekrar **Aç** de.
+
+> Not: macOS 15+ sürümlerinde eski "sağ tık → Aç" yöntemi artık çalışmıyor; yukarıdaki
+> iki yoldan birini kullan.
 
 **Kaynaktan derleme:**
 
@@ -120,8 +132,25 @@ See the table above.
 [Releases](https://github.com/edipdev/macos-perde/releases), move it to `/Applications`
 and open it.
 
-> On first launch macOS may warn because the app is unsigned — allow it via
-> **System Settings → Privacy & Security → Open Anyway**.
+#### ⚠️ Seeing "Perde.app can't be opened"?
+
+Because the app is **unsigned** (no paid Apple Developer certificate), macOS quarantines
+the downloaded file and blocks it, saying _"Apple could not verify it is free of
+malware."_ It's safe — you just need to allow it once, either way:
+
+**Option 1 — Terminal (most reliable):** after moving Perde to `Applications`, run this
+once, then open the app normally:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Perde.app
+```
+
+**Option 2 — Settings:** click **Done** on the warning → open **System Settings →
+Privacy & Security** → scroll to the bottom → click **"Open Anyway"** next to
+"Perde.app was blocked" → confirm **Open**.
+
+> Note: on macOS 15+ the old "right-click → Open" trick no longer works; use one of the
+> two methods above.
 
 **Build from source:**
 
