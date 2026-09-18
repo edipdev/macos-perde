@@ -51,7 +51,7 @@ Dock'ta ikonu yoktur.
 ### ⬇️ Kurulum
 
 **Hazır uygulama:** [Releases](https://github.com/edipdev/macos-perde/releases) sayfasından
-`Perde.app`'i indir, `/Applications` klasörüne taşı ve aç.
+`Perde-0.1.0.dmg`'yi indir, aç ve **Perde**'yi `Applications` klasörüne sürükle.
 
 > İlk açılışta uygulama imzasız olduğu için macOS uyarabilir: **Sistem Ayarları →
 > Gizlilik ve Güvenlik**'ten "Yine de Aç" deyin.
