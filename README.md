@@ -124,7 +124,11 @@ translator, timer and clipboard manager — all in one place. No Dock icon.
 
 ### 📸 Screenshots
 
-See the table above.
+| Music | Translate |
+|:---:|:---:|
+| ![](docs/screenshots/player.png) | ![](docs/screenshots/translate.png) |
+| **Timer** | **Pano** |
+| ![](docs/screenshots/timer.png) | ![](docs/screenshots/clipboard.png) |
 
 ### ⬇️ Install
 
