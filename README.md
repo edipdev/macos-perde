@@ -129,7 +129,7 @@ translator, timer and clipboard manager — all in one place. No Dock icon.
 | Music | Translate |
 |:---:|:---:|
 | ![](docs/screenshots/player.png) | ![](docs/screenshots/translate.png) |
-| **Timer** | **Pano** |
+| **Timer** | **Clipboard** |
 | ![](docs/screenshots/timer.png) | ![](docs/screenshots/clipboard.png) |
 
 ### ⬇️ Install
