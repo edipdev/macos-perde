@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:macnotch}",
+            "name": "Debug Perde",
+            "target": "Perde",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug Perde"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:macnotch}",
+            "name": "Release Perde",
+            "target": "Perde",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release Perde"
+        }
+    ]
+}
