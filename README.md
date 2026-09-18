@@ -11,6 +11,8 @@ _A notch‑based multi‑tool for macOS._
 ![Swift](https://img.shields.io/badge/Swift-6-orange?logo=swift)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
+[![Download](https://img.shields.io/badge/⬇%20İndir-Perde%20v0.1.0%20(.dmg)-brightgreen)](https://github.com/edipdev/macos-perde/releases/download/0.1.0/Perde-0.1.0.dmg)
+
 [Türkçe](#türkçe) · [English](#english)
 
 </div>
@@ -50,8 +52,8 @@ Dock'ta ikonu yoktur.
 
 ### ⬇️ Kurulum
 
-**Hazır uygulama:** [Releases](https://github.com/edipdev/macos-perde/releases) sayfasından
-`Perde-0.1.0.dmg`'yi indir, aç ve **Perde**'yi `Applications` klasörüne sürükle.
+**Hazır uygulama:** [**Perde-0.1.0.dmg indir**](https://github.com/edipdev/macos-perde/releases/download/0.1.0/Perde-0.1.0.dmg) →
+aç ve **Perde**'yi `Applications` klasörüne sürükle. (Tüm sürümler için [Releases](https://github.com/edipdev/macos-perde/releases).)
 
 > İlk açılışta uygulama imzasız olduğu için macOS uyarabilir: **Sistem Ayarları →
 > Gizlilik ve Güvenlik**'ten "Yine de Aç" deyin.
