@@ -52,6 +52,8 @@ Dock'ta ikonu yoktur.
 
 ### ⬇️ Kurulum
 
+<p align="center"><img src="docs/install.gif" width="640" alt="Perde kurulum videosu" /></p>
+
 **Hazır uygulama:** [**Perde-0.1.0.dmg indir**](https://github.com/edipdev/macos-perde/releases/download/0.1.0/Perde-0.1.0.dmg) →
 aç ve **Perde**'yi `Applications` klasörüne sürükle. (Tüm sürümler için [Releases](https://github.com/edipdev/macos-perde/releases).)
 
@@ -131,6 +133,8 @@ translator, timer and clipboard manager — all in one place. No Dock icon.
 | ![](docs/screenshots/timer.png) | ![](docs/screenshots/clipboard.png) |
 
 ### ⬇️ Install
+
+<p align="center"><img src="docs/install.gif" width="640" alt="Perde install walkthrough" /></p>
 
 **Prebuilt app:** [**Download Perde-0.1.0.dmg**](https://github.com/edipdev/macos-perde/releases/download/0.1.0/Perde-0.1.0.dmg) →
 open it and drag **Perde** into your `Applications` folder. (All versions on [Releases](https://github.com/edipdev/macos-perde/releases).)
