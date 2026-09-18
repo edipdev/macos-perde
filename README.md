@@ -50,7 +50,7 @@ Dock'ta ikonu yoktur.
 
 ### ⬇️ Kurulum
 
-**Hazır uygulama:** [Releases](https://github.com/edipdev/perde/releases) sayfasından
+**Hazır uygulama:** [Releases](https://github.com/edipdev/macos-perde/releases) sayfasından
 `Perde.app`'i indir, `/Applications` klasörüne taşı ve aç.
 
 > İlk açılışta uygulama imzasız olduğu için macOS uyarabilir: **Sistem Ayarları →
@@ -59,7 +59,7 @@ Dock'ta ikonu yoktur.
 **Kaynaktan derleme:**
 
 ```bash
-git clone https://github.com/edipdev/perde.git
+git clone https://github.com/edipdev/macos-perde.git
 cd perde
 make run
 ```
@@ -109,7 +109,7 @@ See the table above.
 ### ⬇️ Install
 
 **Prebuilt app:** download `Perde.app` from
-[Releases](https://github.com/edipdev/perde/releases), move it to `/Applications`
+[Releases](https://github.com/edipdev/macos-perde/releases), move it to `/Applications`
 and open it.
 
 > On first launch macOS may warn because the app is unsigned — allow it via
@@ -118,7 +118,7 @@ and open it.
 **Build from source:**
 
 ```bash
-git clone https://github.com/edipdev/perde.git
+git clone https://github.com/edipdev/macos-perde.git
 cd perde
 make run
 ```
