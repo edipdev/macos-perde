@@ -36,6 +36,14 @@ struct SettingsView: View {
                         set: { settings.setEnabled(tab, $0) }
                     ))
                 }
+
+                Picker("Mikser listesi", selection: Binding(
+                    get: { UserDefaults.standard.string(forKey: "perde.mixerListSource") ?? "playingOnly" },
+                    set: { UserDefaults.standard.set($0, forKey: "perde.mixerListSource") }
+                )) {
+                    Text("Sadece ses çalanlar").tag("playingOnly")
+                    Text("Tüm uygulamalar").tag("all")
+                }
             } header: {
                 Text("Sekmeler")
             } footer: {

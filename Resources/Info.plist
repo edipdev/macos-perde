@@ -24,6 +24,8 @@
     <true/>
     <key>NSAppleEventsUsageDescription</key>
     <string>Perde, çalan müziği göstermek ve kontrol etmek için Apple Music ve Spotify uygulamalarına erişir.</string>
+    <key>NSAudioCaptureUsageDescription</key>
+    <string>Perde, uygulama-bazlı ses seviyesini ayarlamak için ses akışını okur.</string>
     <key>NSHumanReadableCopyright</key>
     <string>Perde</string>
 </dict>
