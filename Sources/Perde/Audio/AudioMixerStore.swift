@@ -61,6 +61,11 @@ final class AudioMixerStore: ObservableObject {
     }
 
     private func applyAndRebuild() {
+        let present = Set(monitor.apps.map(\.bundleID))
+        for bundleID in Array(controllers.keys) where !present.contains(bundleID) {
+            controllers[bundleID]?.teardown()
+            controllers[bundleID] = nil
+        }
         for app in monitor.apps {
             if let s = settings[app.bundleID], !s.isDefault {
                 applyController(bundleID: app.bundleID, setting: s, objectIDs: app.objectIDs)
@@ -75,6 +80,9 @@ final class AudioMixerStore: ObservableObject {
         }
         let ids = objectIDs ?? monitor.apps.first { $0.bundleID == bundleID }?.objectIDs ?? []
         guard !ids.isEmpty else { return }
+        if let existing = controllers[bundleID], existing.objectIDs != ids {
+            existing.teardown(); controllers[bundleID] = nil
+        }
         let controller = controllers[bundleID] ?? AppAudioController(objectIDs: ids)
         controllers[bundleID] = controller
         controller.apply(setting)

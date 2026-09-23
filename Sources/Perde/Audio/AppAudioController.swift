@@ -4,7 +4,7 @@ import AudioToolbox
 
 @MainActor
 final class AppAudioController {
-    private let objectIDs: [AudioObjectID]
+    let objectIDs: [AudioObjectID]
     private var tapID: AudioObjectID = 0
     private var aggID: AudioDeviceID = 0
     private var procID: AudioDeviceIOProcID?
