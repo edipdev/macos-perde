@@ -34,7 +34,9 @@ enum OutputDevices {
         var addr = AudioObjectPropertyAddress(mSelector: kAudioDevicePropertyStreamConfiguration, mScope: kAudioObjectPropertyScopeOutput, mElement: kAudioObjectPropertyElementMain)
         var size: UInt32 = 0
         guard AudioObjectGetPropertyDataSize(dev, &addr, 0, nil, &size) == noErr, size > 0 else { return false }
-        let abl = AudioBufferList.allocate(maximumBuffers: Int(size) / MemoryLayout<AudioBuffer>.size)
+        let count = Int(size) / MemoryLayout<AudioBuffer>.size
+        guard count > 0 else { return false }
+        let abl = AudioBufferList.allocate(maximumBuffers: count)
         defer { free(abl.unsafeMutablePointer) }
         guard AudioObjectGetPropertyData(dev, &addr, 0, nil, &size, abl.unsafeMutablePointer) == noErr else { return false }
         return abl.reduce(0) { $0 + Int($1.mNumberChannels) } > 0
