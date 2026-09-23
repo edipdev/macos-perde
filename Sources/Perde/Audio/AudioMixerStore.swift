@@ -13,6 +13,7 @@ final class AudioMixerStore: ObservableObject {
     private var controllers: [String: AppAudioController] = [:]
     private var settings: [String: AppAudioSetting]
     private var cancellables = Set<AnyCancellable>()
+    private var started = false
 
     static let settingsKey = "perde.mixerSettings"
     static let sourceKey = "perde.mixerListSource"
@@ -23,6 +24,8 @@ final class AudioMixerStore: ObservableObject {
     }
 
     func start() {
+        guard !started else { return }
+        started = true
         outputs = OutputDevices.list()
         monitor.$apps
             .receive(on: RunLoop.main)
@@ -35,6 +38,8 @@ final class AudioMixerStore: ObservableObject {
         monitor.stop()
         controllers.values.forEach { $0.teardown() }
         controllers.removeAll()
+        cancellables.removeAll()
+        started = false
     }
 
     func setVolume(_ v: Double, for bundleID: String) { mutate(bundleID) { $0.volume = v } }
