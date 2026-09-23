@@ -8,22 +8,27 @@ final class AudioProcessMonitor: ObservableObject {
 
     private let sys = AudioObjectID(kAudioObjectSystemObject)
     private var listening = false
+    private var listenerBlock: AudioObjectPropertyListenerBlock?
 
     func start() {
         guard !listening else { return }
         listening = true
         var addr = Self.listAddr
-        AudioObjectAddPropertyListenerBlock(sys, &addr, DispatchQueue.main) { [weak self] _, _ in
+        let block: AudioObjectPropertyListenerBlock = { [weak self] _, _ in
             self?.refresh()
         }
+        listenerBlock = block
+        AudioObjectAddPropertyListenerBlock(sys, &addr, DispatchQueue.main, block)
         refresh()
     }
 
     func stop() {
         guard listening else { return }
         listening = false
+        guard let block = listenerBlock else { return }
         var addr = Self.listAddr
-        AudioObjectRemovePropertyListenerBlock(sys, &addr, DispatchQueue.main) { _, _ in }
+        AudioObjectRemovePropertyListenerBlock(sys, &addr, DispatchQueue.main, block)
+        listenerBlock = nil
     }
 
     func refresh() {
