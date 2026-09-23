@@ -8,7 +8,8 @@ final class AppAudioController {
     private var tapID: AudioObjectID = 0
     private var aggID: AudioDeviceID = 0
     private var procID: AudioDeviceIOProcID?
-    private var gain: Float = 1.0
+    nonisolated(unsafe) private var gain: Float = 1.0
+    private var activeOutputUID: String?
 
     init(objectIDs: [UInt32]) { self.objectIDs = objectIDs }
 
@@ -21,7 +22,9 @@ final class AppAudioController {
         gain = Self.effectiveGain(setting)
         if setting.isDefault { teardown(); return }
         let outUID = setting.outputDeviceUID ?? OutputDevices.defaultUID()
-        rebuild(outputUID: outUID)
+        if activeOutputUID == nil || outUID != activeOutputUID {
+            rebuild(outputUID: outUID)
+        }
     }
 
     func teardown() {
@@ -29,6 +32,7 @@ final class AppAudioController {
         procID = nil
         if aggID != 0 { AudioHardwareDestroyAggregateDevice(aggID); aggID = 0 }
         if tapID != 0 { AudioHardwareDestroyProcessTap(tapID); tapID = 0 }
+        activeOutputUID = nil
     }
 
     private func rebuild(outputUID: String?) {
@@ -72,6 +76,7 @@ final class AppAudioController {
         }
         guard status == noErr, let procID else { teardown(); return }
         AudioDeviceStart(aggID, procID)
+        activeOutputUID = outputUID
     }
 
     private func tapUIDString() -> String? {
