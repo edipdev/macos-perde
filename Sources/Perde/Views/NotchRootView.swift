@@ -7,6 +7,7 @@ struct NotchRootView: View {
     @StateObject private var lyricsStore = LyricsStore()
     @StateObject private var timerStore = TimerStore()
     @StateObject private var clipboardStore = ClipboardStore()
+    @StateObject private var mixerStore = AudioMixerStore()
 
     init(viewModel: NotchViewModel) {
         self.viewModel = viewModel
@@ -132,6 +133,8 @@ struct NotchRootView: View {
                 TimerView(store: timerStore)
             case .clipboard:
                 ClipboardView(store: clipboardStore)
+            case .mixer:
+                MixerView(store: mixerStore)
             }
         }
         .padding(.horizontal, 16)

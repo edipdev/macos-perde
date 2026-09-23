@@ -21,6 +21,7 @@ enum NotchGeometry {
         case .translate: return CGSize(width: translateCardWidth, height: translateContentHeight)
         case .timer: return CGSize(width: 360, height: 278)
         case .clipboard: return CGSize(width: 420, height: 300)
+        case .mixer: return CGSize(width: 420, height: 300)
         }
     }
 

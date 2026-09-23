@@ -106,6 +106,7 @@ final class SettingsStore: ObservableObject {
         recentTargets = UserDefaults.standard.stringArray(forKey: Keys.recentTargets) ?? []
         toggleShortcutID = UserDefaults.standard.string(forKey: Keys.toggleShortcut) ?? "opt-cmd-p"
         translateShortcutID = UserDefaults.standard.string(forKey: Keys.translateShortcut) ?? "opt-cmd-t"
+        enabledTabIDs.insert(NotchTab.mixer.id)
     }
 
     func isEnabled(_ tab: NotchTab) -> Bool { enabledTabIDs.contains(tab.id) }

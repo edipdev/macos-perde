@@ -5,6 +5,7 @@ enum NotchTab: CaseIterable {
     case translate
     case timer
     case clipboard
+    case mixer
 
     var icon: String {
         switch self {
@@ -12,6 +13,7 @@ enum NotchTab: CaseIterable {
         case .translate: return "character.bubble"
         case .timer: return "timer"
         case .clipboard: return "doc.on.clipboard"
+        case .mixer: return "slider.vertical.3"
         }
     }
 
@@ -21,6 +23,7 @@ enum NotchTab: CaseIterable {
         case .translate: return "translate"
         case .timer: return "timer"
         case .clipboard: return "clipboard"
+        case .mixer: return "mixer"
         }
     }
 
@@ -30,6 +33,7 @@ enum NotchTab: CaseIterable {
         case .translate: return "Çeviri"
         case .timer: return "Zamanlayıcı"
         case .clipboard: return "Pano"
+        case .mixer: return "Ses Mikseri"
         }
     }
 }
