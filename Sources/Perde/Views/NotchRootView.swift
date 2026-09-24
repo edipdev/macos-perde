@@ -7,7 +7,7 @@ struct NotchRootView: View {
     @StateObject private var lyricsStore = LyricsStore()
     @StateObject private var timerStore = TimerStore()
     @StateObject private var clipboardStore = ClipboardStore()
-    @StateObject private var mixerStore = AudioMixerStore()
+    @ObservedObject private var mixerStore = AudioMixerStore.shared
 
     init(viewModel: NotchViewModel) {
         self.viewModel = viewModel

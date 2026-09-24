@@ -18,7 +18,9 @@ final class AudioMixerStore: ObservableObject {
     static let settingsKey = "perde.mixerSettings"
     static let sourceKey = "perde.mixerListSource"
 
-    init() {
+    static let shared = AudioMixerStore()
+
+    private init() {
         settings = Self.decodeSettings(UserDefaults.standard.data(forKey: Self.settingsKey))
         listSource = MixerListSource(rawValue: UserDefaults.standard.string(forKey: Self.sourceKey) ?? "") ?? .playingOnly
     }

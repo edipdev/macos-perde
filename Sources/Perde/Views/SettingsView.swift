@@ -3,6 +3,7 @@ import ServiceManagement
 
 struct SettingsView: View {
     @ObservedObject private var settings = SettingsStore.shared
+    @ObservedObject private var mixerStore = AudioMixerStore.shared
     @State private var launchAtLogin = SMAppService.mainApp.status == .enabled
 
     var body: some View {
@@ -37,12 +38,9 @@ struct SettingsView: View {
                     ))
                 }
 
-                Picker("Mikser listesi", selection: Binding(
-                    get: { UserDefaults.standard.string(forKey: "perde.mixerListSource") ?? "playingOnly" },
-                    set: { UserDefaults.standard.set($0, forKey: "perde.mixerListSource") }
-                )) {
-                    Text("Sadece ses çalanlar").tag("playingOnly")
-                    Text("Tüm uygulamalar").tag("all")
+                Picker("Mikser listesi", selection: $mixerStore.listSource) {
+                    Text("Sadece ses çalanlar").tag(MixerListSource.playingOnly)
+                    Text("Tüm uygulamalar").tag(MixerListSource.all)
                 }
             } header: {
                 Text("Sekmeler")
