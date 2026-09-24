@@ -25,10 +25,10 @@ enum SystemMetrics {
     }
 
     static func cpuPercent(previous: CPUTicks, current: CPUTicks) -> Double {
-        let dt = current.total - previous.total
-        guard dt > 0 else { return 0 }
-        let percent = Double(current.used - previous.used) / Double(dt) * 100
-        return min(max(percent, 0), 100)
+        guard current.total > previous.total, current.used >= previous.used else { return 0 }
+        let deltaTotal = current.total - previous.total
+        let deltaUsed = current.used - previous.used
+        return min(max(Double(deltaUsed) / Double(deltaTotal) * 100, 0), 100)
     }
 
     static func memoryPercent() -> Double {

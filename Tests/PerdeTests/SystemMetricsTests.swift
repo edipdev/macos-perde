@@ -12,4 +12,10 @@ final class SystemMetricsTests: XCTestCase {
         let ticks = SystemMetrics.CPUTicks(used: 100, total: 200)
         XCTAssertEqual(SystemMetrics.cpuPercent(previous: ticks, current: ticks), 0)
     }
+
+    func testCpuPercentReturnsZeroOnUnderflow() {
+        let previous = SystemMetrics.CPUTicks(used: 500, total: 1000)
+        let current = SystemMetrics.CPUTicks(used: 0, total: 0)
+        XCTAssertEqual(SystemMetrics.cpuPercent(previous: previous, current: current), 0)
+    }
 }
