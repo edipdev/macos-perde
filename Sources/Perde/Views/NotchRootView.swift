@@ -10,6 +10,7 @@ struct NotchRootView: View {
     @ObservedObject private var mixerStore = AudioMixerStore.shared
     @StateObject private var outputStore = OutputSwitcherStore()
     @StateObject private var keepAwakeStore = KeepAwakeStore()
+    @StateObject private var colorStore = ColorPickerStore()
 
     init(viewModel: NotchViewModel) {
         self.viewModel = viewModel
@@ -141,6 +142,8 @@ struct NotchRootView: View {
                 OutputSwitcherView(store: outputStore)
             case .keepAwake:
                 KeepAwakeView(store: keepAwakeStore)
+            case .color:
+                ColorPickerView(store: colorStore)
             }
         }
         .padding(.horizontal, 16)

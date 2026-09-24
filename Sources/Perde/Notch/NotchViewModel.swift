@@ -8,6 +8,7 @@ enum NotchTab: CaseIterable {
     case mixer
     case output
     case keepAwake
+    case color
 
     static let defaultEnabled: [NotchTab] = [.music, .translate, .timer, .clipboard, .mixer]
 
@@ -20,6 +21,7 @@ enum NotchTab: CaseIterable {
         case .mixer: return "slider.vertical.3"
         case .output: return "hifispeaker.fill"
         case .keepAwake: return "cup.and.saucer.fill"
+        case .color: return "eyedropper.halffull"
         }
     }
 
@@ -32,6 +34,7 @@ enum NotchTab: CaseIterable {
         case .mixer: return "mixer"
         case .output: return "output"
         case .keepAwake: return "keepawake"
+        case .color: return "color"
         }
     }
 
@@ -44,6 +47,7 @@ enum NotchTab: CaseIterable {
         case .mixer: return "Ses Mikseri"
         case .output: return "Ses Çıkışı"
         case .keepAwake: return "Kafein"
+        case .color: return "Renk Seçici"
         }
     }
 }
