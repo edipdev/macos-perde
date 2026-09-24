@@ -38,9 +38,10 @@ final class AudioProcessMonitor: ObservableObject {
     }
 
     func refresh() {
-        let infos = Self.readProcesses()
-        let newApps = AudioApp.grouped(from: infos) { Self.appName(for: $0) }
-        if newApps != apps { apps = newApps }
+        let apps = Self.realApps()
+        let infos = Self.readProcesses().filter { apps[AudioApp.parentBundle($0.bundleID)] != nil }
+        let newApps = AudioApp.grouped(from: infos) { apps[$0] ?? Self.appName(for: $0) }
+        if newApps != self.apps { self.apps = newApps }
     }
 
     private static var listAddr = AudioObjectPropertyAddress(
@@ -91,5 +92,16 @@ final class AudioProcessMonitor: ObservableObject {
             return name.replacingOccurrences(of: ".app", with: "")
         }
         return bundleID
+    }
+
+    private static func realApps() -> [String: String] {
+        var map: [String: String] = [:]
+        let selfID = Bundle.main.bundleIdentifier
+        for app in NSWorkspace.shared.runningApplications
+        where app.activationPolicy == .regular || app.activationPolicy == .accessory {
+            guard let bid = app.bundleIdentifier, bid != selfID else { continue }
+            map[bid] = app.localizedName ?? bid
+        }
+        return map
     }
 }
