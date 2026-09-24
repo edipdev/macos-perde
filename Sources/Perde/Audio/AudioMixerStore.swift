@@ -47,6 +47,14 @@ final class AudioMixerStore: ObservableObject {
         started = false
     }
 
+    /// Stop the polling monitor when the mixer is hidden — but only if no app is
+    /// currently being adjusted. An active controller holds a live audio tap
+    /// (and the macOS recording indicator) doing real work, so it must stay.
+    func stopIfIdle() {
+        guard controllers.isEmpty else { return }
+        stop()
+    }
+
     func setVolume(_ v: Double, for bundleID: String) { mutate(bundleID) { $0.volume = v } }
     func setMuted(_ m: Bool, for bundleID: String) { mutate(bundleID) { $0.muted = m } }
     func setOutput(_ uid: String?, for bundleID: String) { mutate(bundleID) { $0.outputDeviceUID = uid } }

@@ -25,6 +25,7 @@ struct MixerView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear { store.start() }
+        .onDisappear { store.stopIfIdle() }
     }
 
     private func rowView(_ row: MixerRow) -> some View {
