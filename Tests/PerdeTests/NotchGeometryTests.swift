@@ -20,11 +20,11 @@ final class NotchGeometryTests: XCTestCase {
 
     func testExpandedCardsReserveTopInset() {
         let music = NotchGeometry.cardSize(tab: .music, expanded: true, notchWidth: 200, topInset: inset)
-        XCTAssertEqual(music.height, inset + NotchGeometry.musicContentHeight)
+        XCTAssertEqual(music.height, inset + NotchGeometry.expandedContentHeight)
 
         let translate = NotchGeometry.cardSize(tab: .translate, expanded: true, notchWidth: 200, topInset: inset)
-        XCTAssertEqual(translate.height, inset + NotchGeometry.translateContentHeight)
-        XCTAssertGreaterThan(translate.height, music.height)
+        XCTAssertEqual(translate.height, inset + NotchGeometry.expandedContentHeight)
+        XCTAssertEqual(translate.height, music.height)
     }
 
     func testWindowFrameIsTopAnchoredAndCentered() {
