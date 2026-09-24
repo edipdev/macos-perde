@@ -22,4 +22,9 @@ final class MixerRowTests: XCTestCase {
         let rows = MixerRow.build(apps: [spotify], settings: [:], source: .all)
         XCTAssertTrue(rows.first?.setting.isDefault == true)
     }
+    func testPinnedAppSortsBeforeUnpinnedDespiteName() {
+        let allApps = [AudioApp(bundleID: "com.apple.Music", name: "Music", objectIDs: [2], isPlaying: true), spotify]
+        let rows = MixerRow.build(apps: allApps, settings: [:], source: .all, pinned: ["com.spotify.client"])
+        XCTAssertEqual(rows.map(\.app.bundleID), ["com.spotify.client", "com.apple.Music"])
+    }
 }

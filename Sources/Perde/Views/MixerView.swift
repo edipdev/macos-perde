@@ -34,6 +34,9 @@ struct MixerView: View {
                 icon(for: bundleID)
                 Text(row.app.name).font(.system(size: 12.5, weight: .semibold)).foregroundStyle(Theme.primaryText).lineLimit(1)
                 Spacer(minLength: 4)
+                Button { store.togglePin(bundleID) } label: {
+                    Image(systemName: store.pinned.contains(bundleID) ? "pin.fill" : "pin").font(.system(size: 11))
+                }.buttonStyle(.plain).foregroundStyle(store.pinned.contains(bundleID) ? Theme.accent : Theme.tertiaryText)
                 outputMenu(row)
             }
             HStack(spacing: 8) {
@@ -42,11 +45,9 @@ struct MixerView: View {
                         get: { row.setting.muted ? 0 : row.setting.volume },
                         set: { store.setVolume($0, for: bundleID) }
                     ),
-                    in: 0...1
+                    in: 0...2
                 )
-                Text("\(Int((row.setting.muted ? 0 : row.setting.volume) * 100))%")
-                    .font(.system(size: 11, weight: .medium)).foregroundStyle(Theme.secondaryText)
-                    .frame(width: 38, alignment: .trailing)
+                boostLabel(for: row)
                 Button { store.reset(bundleID) } label: {
                     Image(systemName: "arrow.counterclockwise").font(.system(size: 11))
                 }.buttonStyle(.plain).foregroundStyle(Theme.tertiaryText)
@@ -57,6 +58,17 @@ struct MixerView: View {
         }
         .padding(9)
         .background(Color.primary.opacity(0.06), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+    }
+
+    private func boostLabel(for row: MixerRow) -> some View {
+        let volume = row.setting.muted ? 0 : row.setting.volume
+        let boosted = volume > 1.0
+        return HStack(spacing: 2) {
+            if boosted { Image(systemName: "bolt.fill").font(.system(size: 9)) }
+            Text("\(Int(volume * 100))%").font(.system(size: 11, weight: .medium))
+        }
+        .foregroundStyle(boosted ? Theme.accent : Theme.secondaryText)
+        .frame(width: 42, alignment: .trailing)
     }
 
     private func icon(for bundleID: String) -> some View {

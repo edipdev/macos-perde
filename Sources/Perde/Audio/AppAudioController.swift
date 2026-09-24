@@ -25,7 +25,7 @@ final class AppAudioController {
 
     nonisolated static func effectiveGain(_ setting: AppAudioSetting) -> Float {
         if setting.muted { return 0 }
-        return Float(min(max(setting.volume, 0), 1))
+        return Float(min(max(setting.volume, 0), 2))
     }
 
     func apply(_ setting: AppAudioSetting) {

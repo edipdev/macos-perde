@@ -9,6 +9,9 @@ final class AudioGainTests: XCTestCase {
         XCTAssertEqual(AppAudioController.effectiveGain(AppAudioSetting(volume: 0.5, muted: false, outputDeviceUID: nil)), 0.5, accuracy: 0.0001)
     }
     func testClampsAboveOne() {
-        XCTAssertEqual(AppAudioController.effectiveGain(AppAudioSetting(volume: 2.0, muted: false, outputDeviceUID: nil)), 1.0)
+        XCTAssertEqual(AppAudioController.effectiveGain(AppAudioSetting(volume: 2.0, muted: false, outputDeviceUID: nil)), 2.0)
+    }
+    func testClampsAboveTwo() {
+        XCTAssertEqual(AppAudioController.effectiveGain(AppAudioSetting(volume: 3.0, muted: false, outputDeviceUID: nil)), 2.0)
     }
 }

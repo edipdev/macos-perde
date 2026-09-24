@@ -7,6 +7,7 @@ final class AudioMixerStore: ObservableObject {
     @Published var listSource: MixerListSource {
         didSet { UserDefaults.standard.set(listSource.rawValue, forKey: Self.sourceKey); rebuildRows() }
     }
+    @Published private(set) var pinned: Set<String> = []
     private(set) var outputs: [OutputDevice] = []
 
     private let monitor = AudioProcessMonitor()
@@ -17,12 +18,14 @@ final class AudioMixerStore: ObservableObject {
 
     static let settingsKey = "perde.mixerSettings"
     static let sourceKey = "perde.mixerListSource"
+    static let pinnedKey = "perde.mixerPinned"
 
     static let shared = AudioMixerStore()
 
     private init() {
         settings = Self.decodeSettings(UserDefaults.standard.data(forKey: Self.settingsKey))
         listSource = MixerListSource(rawValue: UserDefaults.standard.string(forKey: Self.sourceKey) ?? "") ?? .playingOnly
+        pinned = Set(UserDefaults.standard.stringArray(forKey: Self.pinnedKey) ?? [])
     }
 
     func start() {
@@ -47,6 +50,11 @@ final class AudioMixerStore: ObservableObject {
     func setVolume(_ v: Double, for bundleID: String) { mutate(bundleID) { $0.volume = v } }
     func setMuted(_ m: Bool, for bundleID: String) { mutate(bundleID) { $0.muted = m } }
     func setOutput(_ uid: String?, for bundleID: String) { mutate(bundleID) { $0.outputDeviceUID = uid } }
+    func togglePin(_ bundleID: String) {
+        if pinned.contains(bundleID) { pinned.remove(bundleID) } else { pinned.insert(bundleID) }
+        UserDefaults.standard.set(Array(pinned), forKey: Self.pinnedKey)
+        rebuildRows()
+    }
     func reset(_ bundleID: String) {
         settings[bundleID] = nil
         controllers[bundleID]?.teardown()
@@ -91,7 +99,7 @@ final class AudioMixerStore: ObservableObject {
     }
 
     private func rebuildRows() {
-        rows = MixerRow.build(apps: monitor.apps, settings: settings, source: listSource)
+        rows = MixerRow.build(apps: monitor.apps, settings: settings, source: listSource, pinned: pinned)
     }
 
     private func persist() { UserDefaults.standard.set(Self.encodeSettings(settings), forKey: Self.settingsKey) }

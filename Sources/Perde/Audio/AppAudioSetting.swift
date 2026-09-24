@@ -8,6 +8,6 @@ struct AppAudioSetting: Codable, Equatable {
     static let `default` = AppAudioSetting(volume: 1.0, muted: false, outputDeviceUID: nil)
 
     var isDefault: Bool {
-        volume >= 1.0 && !muted && outputDeviceUID == nil
+        volume == 1.0 && !muted && outputDeviceUID == nil
     }
 }
