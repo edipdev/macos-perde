@@ -18,6 +18,7 @@ struct SystemMonitorView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear { store.start() }
+        .onDisappear { store.stop() }
     }
 
     private var batteryRow: some View {

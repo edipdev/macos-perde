@@ -24,6 +24,7 @@ struct OutputSwitcherView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear { store.start() }
+        .onDisappear { store.stop() }
     }
 
     private func rowView(_ device: OutputDevice) -> some View {
