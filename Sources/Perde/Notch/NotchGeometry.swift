@@ -25,6 +25,7 @@ enum NotchGeometry {
         case .output: return CGSize(width: 380, height: 260)
         case .keepAwake: return CGSize(width: 360, height: 240)
         case .color: return CGSize(width: 380, height: 260)
+        case .monitor: return CGSize(width: 360, height: 220)
         }
     }
 

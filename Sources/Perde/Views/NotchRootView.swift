@@ -11,6 +11,7 @@ struct NotchRootView: View {
     @StateObject private var outputStore = OutputSwitcherStore()
     @StateObject private var keepAwakeStore = KeepAwakeStore()
     @StateObject private var colorStore = ColorPickerStore()
+    @StateObject private var monitorStore = SystemMonitorStore()
 
     init(viewModel: NotchViewModel) {
         self.viewModel = viewModel
@@ -144,6 +145,8 @@ struct NotchRootView: View {
                 KeepAwakeView(store: keepAwakeStore)
             case .color:
                 ColorPickerView(store: colorStore)
+            case .monitor:
+                SystemMonitorView(store: monitorStore)
             }
         }
         .padding(.horizontal, 16)
