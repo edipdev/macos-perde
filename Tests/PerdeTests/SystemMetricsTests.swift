@@ -18,4 +18,20 @@ final class SystemMetricsTests: XCTestCase {
         let current = SystemMetrics.CPUTicks(used: 0, total: 0)
         XCTAssertEqual(SystemMetrics.cpuPercent(previous: previous, current: current), 0)
     }
+
+    func testNetSpeedComputesBytesPerSecond() {
+        let previous = SystemMetrics.NetCounters(received: 1000, sent: 500)
+        let current = SystemMetrics.NetCounters(received: 3000, sent: 1500)
+        let speed = SystemMetrics.netSpeed(previous: previous, current: current, seconds: 2)
+        XCTAssertEqual(speed.down, 1000)
+        XCTAssertEqual(speed.up, 500)
+    }
+
+    func testNetSpeedReturnsZeroOnUnderflow() {
+        let previous = SystemMetrics.NetCounters(received: 3000, sent: 1500)
+        let current = SystemMetrics.NetCounters(received: 1000, sent: 500)
+        let speed = SystemMetrics.netSpeed(previous: previous, current: current, seconds: 2)
+        XCTAssertEqual(speed.down, 0)
+        XCTAssertEqual(speed.up, 0)
+    }
 }

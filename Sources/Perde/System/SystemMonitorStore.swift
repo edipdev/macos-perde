@@ -6,8 +6,13 @@ final class SystemMonitorStore: ObservableObject {
     @Published private(set) var memory: Double = 0
     @Published private(set) var battery: Double? = nil
     @Published private(set) var charging = false
+    @Published private(set) var download: Double = 0
+    @Published private(set) var upload: Double = 0
+    @Published private(set) var disk: Double = 0
+    @Published private(set) var temperature: Double? = nil
 
     private var previous = SystemMetrics.cpuTicks()
+    private var previousNet = SystemMetrics.netCounters()
     private var timer: Timer?
     private var started = false
 
@@ -35,5 +40,14 @@ final class SystemMonitorStore: ObservableObject {
         memory = SystemMetrics.memoryPercent()
         battery = SystemMetrics.batteryPercent()
         charging = SystemMetrics.batteryCharging()
+
+        let nowNet = SystemMetrics.netCounters()
+        let speed = SystemMetrics.netSpeed(previous: previousNet, current: nowNet, seconds: 1)
+        download = speed.down
+        upload = speed.up
+        previousNet = nowNet
+
+        disk = SystemMetrics.diskUsage()
+        temperature = SystemMetrics.cpuTemperature()
     }
 }

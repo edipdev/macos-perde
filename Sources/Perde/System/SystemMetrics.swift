@@ -2,11 +2,31 @@ import Darwin
 import Foundation
 import IOKit.ps
 
+@_silgen_name("IOHIDEventSystemClientCreate")
+private func IOHIDEventSystemClientCreate(_ allocator: CFAllocator?) -> Unmanaged<AnyObject>?
+
+@_silgen_name("IOHIDEventSystemClientSetMatching")
+private func IOHIDEventSystemClientSetMatching(_ client: AnyObject, _ match: CFDictionary) -> Void
+
+@_silgen_name("IOHIDEventSystemClientCopyServices")
+private func IOHIDEventSystemClientCopyServices(_ client: AnyObject) -> Unmanaged<CFArray>?
+
+@_silgen_name("IOHIDServiceClientCopyEvent")
+private func IOHIDServiceClientCopyEvent(_ service: AnyObject, _ type: Int64, _ options: Int32, _ timestamp: Int64) -> Unmanaged<AnyObject>?
+
+@_silgen_name("IOHIDEventGetFloatValue")
+private func IOHIDEventGetFloatValue(_ event: AnyObject, _ field: Int32) -> Double
+
 enum SystemMetrics {
 
     struct CPUTicks {
         let used: UInt64
         let total: UInt64
+    }
+
+    struct NetCounters {
+        let received: UInt64
+        let sent: UInt64
     }
 
     static func cpuTicks() -> CPUTicks {
@@ -70,5 +90,84 @@ enum SystemMetrics {
             }
         }
         return false
+    }
+
+    static func netCounters() -> NetCounters {
+        var received: UInt64 = 0
+        var sent: UInt64 = 0
+        var ifaddrPointer: UnsafeMutablePointer<ifaddrs>?
+        guard getifaddrs(&ifaddrPointer) == 0, let firstAddr = ifaddrPointer else {
+            return NetCounters(received: 0, sent: 0)
+        }
+        defer { freeifaddrs(ifaddrPointer) }
+        var pointer: UnsafeMutablePointer<ifaddrs>? = firstAddr
+        while let current = pointer {
+            let interface = current.pointee
+            let name = String(cString: interface.ifa_name)
+            let addressFamily = interface.ifa_addr?.pointee.sa_family
+            if name != "lo0", addressFamily == UInt8(AF_LINK), let data = interface.ifa_data {
+                let networkData = data.assumingMemoryBound(to: if_data.self).pointee
+                received += UInt64(networkData.ifi_ibytes)
+                sent += UInt64(networkData.ifi_obytes)
+            }
+            pointer = interface.ifa_next
+        }
+        return NetCounters(received: received, sent: sent)
+    }
+
+    static func netSpeed(previous: NetCounters, current: NetCounters, seconds: Double) -> (down: Double, up: Double) {
+        guard seconds > 0, current.received >= previous.received, current.sent >= previous.sent else {
+            return (0, 0)
+        }
+        let down = Double(current.received - previous.received) / seconds
+        let up = Double(current.sent - previous.sent) / seconds
+        return (down, up)
+    }
+
+    static func diskUsage() -> Double {
+        guard let attributes = try? FileManager.default.attributesOfFileSystem(forPath: "/"),
+              let total = attributes[.systemSize] as? NSNumber,
+              let free = attributes[.systemFreeSize] as? NSNumber,
+              total.doubleValue > 0 else {
+            return 0
+        }
+        let usedFraction = (total.doubleValue - free.doubleValue) / total.doubleValue
+        return min(max(usedFraction, 0), 1)
+    }
+
+    static func cpuTemperature() -> Double? {
+        let kHIDPageAppleVendor: Int32 = 0xff00
+        let kHIDUsageAppleVendorTemperatureSensor: Int32 = 0x0005
+        let kIOHIDEventTypeTemperature: Int64 = 15
+
+        guard let client = IOHIDEventSystemClientCreate(kCFAllocatorDefault)?.takeRetainedValue() else {
+            return nil
+        }
+
+        let matching: [String: Any] = [
+            "PrimaryUsagePage": kHIDPageAppleVendor,
+            "PrimaryUsage": kHIDUsageAppleVendorTemperatureSensor
+        ]
+        IOHIDEventSystemClientSetMatching(client, matching as CFDictionary)
+
+        guard let services = IOHIDEventSystemClientCopyServices(client)?.takeRetainedValue() as? [AnyObject],
+              !services.isEmpty else {
+            return nil
+        }
+
+        var readings: [Double] = []
+        let temperatureField: Int32 = Int32(kIOHIDEventTypeTemperature << 16)
+        for service in services {
+            guard let event = IOHIDServiceClientCopyEvent(service, kIOHIDEventTypeTemperature, 0, 0)?.takeRetainedValue() else {
+                continue
+            }
+            let value = IOHIDEventGetFloatValue(event, temperatureField)
+            if value >= 10, value <= 110 {
+                readings.append(value)
+            }
+        }
+
+        guard !readings.isEmpty else { return nil }
+        return readings.reduce(0, +) / Double(readings.count)
     }
 }
