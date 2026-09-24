@@ -27,13 +27,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         let settings = SettingsStore.shared
         settings.$toggleShortcutID.dropFirst()
-            .sink { [weak self] _ in self?.applyHotKeys() }
+            .sink { [weak self] _ in DispatchQueue.main.async { self?.applyHotKeys() } }
             .store(in: &cancellables)
         settings.$translateShortcutID.dropFirst()
-            .sink { [weak self] _ in self?.applyHotKeys() }
+            .sink { [weak self] _ in DispatchQueue.main.async { self?.applyHotKeys() } }
             .store(in: &cancellables)
         settings.$commandBarEnabled.dropFirst()
-            .sink { [weak self] _ in self?.applyHotKeys() }
+            .sink { [weak self] _ in DispatchQueue.main.async { self?.applyHotKeys() } }
             .store(in: &cancellables)
     }
 
