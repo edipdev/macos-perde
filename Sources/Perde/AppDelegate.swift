@@ -6,6 +6,7 @@ import ServiceManagement
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var controller: NotchController?
+    private var commandBar: CommandBarController?
     private var statusItem: NSStatusItem?
     private var settingsWindow: NSWindow?
     private var cancellables = Set<AnyCancellable>()
@@ -17,6 +18,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let controller = NotchController()
         controller.start()
         self.controller = controller
+
+        let commandBar = CommandBarController()
+        commandBar.itemsProvider = { [weak self] in self?.buildCommandItems() ?? [] }
+        self.commandBar = commandBar
+
         applyHotKeys()
 
         let settings = SettingsStore.shared
@@ -24,6 +30,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             .sink { [weak self] _ in self?.applyHotKeys() }
             .store(in: &cancellables)
         settings.$translateShortcutID.dropFirst()
+            .sink { [weak self] _ in self?.applyHotKeys() }
+            .store(in: &cancellables)
+        settings.$commandBarEnabled.dropFirst()
             .sink { [weak self] _ in self?.applyHotKeys() }
             .store(in: &cancellables)
     }
@@ -60,6 +69,36 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                                      shift: translate.shift, control: translate.ctrl) { [weak controller] in
             controller?.openTranslate()
         }
+
+        if settings.commandBarEnabled {
+            HotKeyCenter.shared.register(keyCode: 49, option: true) { [weak self] in
+                self?.commandBar?.toggle()
+            }
+        }
+    }
+
+    private func buildCommandItems() -> [CommandItem] {
+        var items: [CommandItem] = NotchTab.allCases.filter { SettingsStore.shared.isEnabled($0) }.map { tab in
+            CommandItem(title: "Aç: \(tab.title)", icon: tab.icon) { [weak self] in
+                self?.controller?.open(tab)
+            }
+        }
+        items.append(CommandItem(title: "Kafein: Süresiz", icon: "cup.and.saucer.fill") {
+            KeepAwakeStore.shared.activate(duration: nil)
+        })
+        items.append(CommandItem(title: "Kafein: Kapat", icon: "cup.and.saucer.fill") {
+            KeepAwakeStore.shared.deactivate()
+        })
+        items.append(CommandItem(title: "Renk Seç", icon: "eyedropper") {
+            ColorPickerStore.shared.pick()
+        })
+        items.append(CommandItem(title: "Çentiği Aç/Kapat", icon: "chevron.compact.down") { [weak self] in
+            self?.controller?.toggleViaHotKey()
+        })
+        items.append(CommandItem(title: "Ayarlar…", icon: "gearshape") { [weak self] in
+            self?.openSettings()
+        })
+        return items
     }
 
     private func setupStatusItem() {

@@ -49,6 +49,10 @@ final class SettingsStore: ObservableObject {
         didSet { UserDefaults.standard.set(translateShortcutID, forKey: Keys.translateShortcut) }
     }
 
+    @Published var commandBarEnabled: Bool {
+        didSet { UserDefaults.standard.set(commandBarEnabled, forKey: Keys.commandBar) }
+    }
+
     static let toggleOptions: [ShortcutOption] = [
         ShortcutOption(id: "opt-cmd-p", label: "⌥⌘P", keyCode: 35, cmd: true, opt: true, ctrl: false, shift: false),
         ShortcutOption(id: "ctrl-opt-p", label: "⌃⌥P", keyCode: 35, cmd: false, opt: true, ctrl: true, shift: false),
@@ -84,6 +88,7 @@ final class SettingsStore: ObservableObject {
         static let recentTargets = "perde.recentTargets"
         static let toggleShortcut = "perde.toggleShortcut"
         static let translateShortcut = "perde.translateShortcut"
+        static let commandBar = "perde.commandBarEnabled"
     }
 
     private init() {
@@ -106,6 +111,7 @@ final class SettingsStore: ObservableObject {
         recentTargets = UserDefaults.standard.stringArray(forKey: Keys.recentTargets) ?? []
         toggleShortcutID = UserDefaults.standard.string(forKey: Keys.toggleShortcut) ?? "opt-cmd-p"
         translateShortcutID = UserDefaults.standard.string(forKey: Keys.translateShortcut) ?? "opt-cmd-t"
+        commandBarEnabled = UserDefaults.standard.bool(forKey: Keys.commandBar)
         if !UserDefaults.standard.bool(forKey: "perde.mixerTabMigrated") {
             enabledTabIDs.insert(NotchTab.mixer.id)
             UserDefaults.standard.set(Array(enabledTabIDs), forKey: Keys.tabs)

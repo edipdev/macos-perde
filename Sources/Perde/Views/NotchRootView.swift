@@ -9,8 +9,8 @@ struct NotchRootView: View {
     @StateObject private var clipboardStore = ClipboardStore()
     @ObservedObject private var mixerStore = AudioMixerStore.shared
     @StateObject private var outputStore = OutputSwitcherStore()
-    @StateObject private var keepAwakeStore = KeepAwakeStore()
-    @StateObject private var colorStore = ColorPickerStore()
+    @ObservedObject private var keepAwakeStore = KeepAwakeStore.shared
+    @ObservedObject private var colorStore = ColorPickerStore.shared
     @StateObject private var monitorStore = SystemMonitorStore()
 
     init(viewModel: NotchViewModel) {

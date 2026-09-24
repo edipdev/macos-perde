@@ -3,12 +3,16 @@ import IOKit.pwr_mgt
 
 @MainActor
 final class KeepAwakeStore: ObservableObject {
+    static let shared = KeepAwakeStore()
+
     @Published private(set) var isActive = false
     @Published private(set) var remaining: TimeInterval? = nil
 
     private var assertionID: IOPMAssertionID = 0
     private var timer: Timer?
     private var endDate: Date?
+
+    private init() {}
 
     func activate(duration: TimeInterval?) {
         if isActive { deactivate() }

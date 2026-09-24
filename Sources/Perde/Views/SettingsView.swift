@@ -12,6 +12,7 @@ struct SettingsView: View {
                 Toggle("Girişte başlat", isOn: $launchAtLogin)
                     .onChange(of: launchAtLogin) { _, value in setLaunchAtLogin(value) }
                 Toggle("Tam ekranda gizle", isOn: $settings.autoHideFullscreen)
+                Toggle("Komut çubuğu (⌥Space)", isOn: $settings.commandBarEnabled)
             }
 
             Section {

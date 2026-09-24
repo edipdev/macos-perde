@@ -67,6 +67,14 @@ final class NotchController {
         viewModel.isExpanded = true
     }
 
+    func open(_ tab: NotchTab) {
+        forceOpen = true
+        collapseWorkItem?.cancel(); collapseWorkItem = nil
+        viewModel.selectedTab = tab
+        window?.ignoresMouseEvents = false
+        viewModel.isExpanded = true
+    }
+
     private var currentCardSize: CGSize {
         NotchGeometry.cardSize(
             tab: viewModel.selectedTab,

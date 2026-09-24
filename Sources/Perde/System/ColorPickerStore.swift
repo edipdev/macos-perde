@@ -2,13 +2,15 @@ import AppKit
 
 @MainActor
 final class ColorPickerStore: ObservableObject {
+    static let shared = ColorPickerStore()
+
     @Published private(set) var recent: [String] = []
 
     private enum Keys {
         static let recentColors = "perde.recentColors"
     }
 
-    init() {
+    private init() {
         if let saved = UserDefaults.standard.array(forKey: Keys.recentColors) as? [String] {
             recent = Array(saved.prefix(8))
         }
