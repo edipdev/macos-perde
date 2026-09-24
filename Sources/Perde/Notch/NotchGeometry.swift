@@ -15,22 +15,11 @@ enum NotchGeometry {
         CGSize(width: windowWidth, height: topInset + 360)
     }
 
+    static let expandedContentWidth: CGFloat = 440
     static let expandedContentHeight: CGFloat = 320
 
     static func contentSize(for tab: NotchTab, showLyrics: Bool) -> CGSize {
-        let width: CGFloat
-        switch tab {
-        case .music: width = musicCardWidth
-        case .translate: width = translateCardWidth
-        case .timer: width = 360
-        case .clipboard: width = 420
-        case .mixer: width = 420
-        case .output: width = 380
-        case .keepAwake: width = 360
-        case .color: width = 380
-        case .monitor: width = 360
-        }
-        return CGSize(width: width, height: expandedContentHeight)
+        CGSize(width: expandedContentWidth, height: expandedContentHeight)
     }
 
     static func collapsedSize(notchWidth: CGFloat?, topInset: CGFloat) -> CGSize {
