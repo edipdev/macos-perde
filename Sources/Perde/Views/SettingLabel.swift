@@ -15,7 +15,8 @@ struct SettingLabel: View {
             Image(systemName: "info.circle")
                 .font(.system(size: 11))
                 .foregroundStyle(.secondary)
-                .help(help)
         }
+        .contentShape(Rectangle())
+        .help(help)
     }
 }
