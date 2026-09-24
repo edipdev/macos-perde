@@ -9,16 +9,24 @@ struct SettingsView: View {
     var body: some View {
         Form {
             Section("Genel") {
-                Toggle("Girişte başlat", isOn: $launchAtLogin)
-                    .onChange(of: launchAtLogin) { _, value in setLaunchAtLogin(value) }
-                Toggle("Tam ekranda gizle", isOn: $settings.autoHideFullscreen)
-                Toggle("Komut çubuğu (⌥Space)", isOn: $settings.commandBarEnabled)
+                Toggle(isOn: $launchAtLogin) {
+                    SettingLabel("Girişte başlat", "Mac'i açtığında Perde otomatik başlar")
+                }
+                .onChange(of: launchAtLogin) { _, value in setLaunchAtLogin(value) }
+                Toggle(isOn: $settings.autoHideFullscreen) {
+                    SettingLabel("Tam ekranda gizle", "Bir uygulama tam ekrandayken çentik gizlenir")
+                }
+                Toggle(isOn: $settings.commandBarEnabled) {
+                    SettingLabel("Komut çubuğu (⌥Space)", "⌥Space ile Spotlight tarzı hızlı komut penceresi açar")
+                }
             }
 
             Section {
-                Picker("Tema", selection: $settings.theme) {
+                Picker(selection: $settings.theme) {
                     Text("Siyah").tag(SettingsStore.Theme.black)
                     Text("Açık").tag(SettingsStore.Theme.light)
+                } label: {
+                    SettingLabel("Tema", "Çentik teması: Siyah veya Açık")
                 }
                 .pickerStyle(.segmented)
 
@@ -26,22 +34,28 @@ struct SettingsView: View {
                     Text("Kapalıyken şeffaf, açıldığında açık (#999999) kart.")
                         .font(.caption).foregroundStyle(.secondary)
                 }
-                ColorPicker("Vurgu rengi", selection: $settings.accentColor, supportsOpacity: false)
+                ColorPicker(selection: $settings.accentColor, supportsOpacity: false) {
+                    SettingLabel("Vurgu rengi", "Vurgular, göstergeler ve seçili öğeler için renk")
+                }
             } header: {
                 Text("Tema")
             }
 
             Section {
                 ForEach(NotchTab.allCases, id: \.self) { tab in
-                    Toggle(tab.title, isOn: Binding(
+                    Toggle(isOn: Binding(
                         get: { settings.isEnabled(tab) },
                         set: { settings.setEnabled(tab, $0) }
-                    ))
+                    )) {
+                        SettingLabel(tab.title, tab.help)
+                    }
                 }
 
-                Picker("Mikser listesi", selection: $mixerStore.listSource) {
+                Picker(selection: $mixerStore.listSource) {
                     Text("Sadece ses çalanlar").tag(MixerListSource.playingOnly)
                     Text("Tüm uygulamalar").tag(MixerListSource.all)
+                } label: {
+                    SettingLabel("Mikser listesi", "Ses mikserinde hangi uygulamalar listelensin")
                 }
             } header: {
                 Text("Sekmeler")
@@ -51,11 +65,13 @@ struct SettingsView: View {
             }
 
             Section {
-                Picker("Perde'nin görüneceği ekran", selection: $settings.preferredScreenName) {
+                Picker(selection: $settings.preferredScreenName) {
                     Text("Otomatik (çentikli ekran)").tag("")
                     ForEach(NSScreen.screens, id: \.localizedName) { screen in
                         Text(screen.localizedName).tag(screen.localizedName)
                     }
+                } label: {
+                    SettingLabel("Perde'nin görüneceği ekran", "Birden fazla monitörde Perde'nin çıkacağı ekran")
                 }
             } header: {
                 Text("Görünüm")
@@ -65,11 +81,15 @@ struct SettingsView: View {
             }
 
             Section("Kısayollar") {
-                Picker("Çentiği aç/kapat", selection: $settings.toggleShortcutID) {
+                Picker(selection: $settings.toggleShortcutID) {
                     ForEach(SettingsStore.toggleOptions) { Text($0.label).tag($0.id) }
+                } label: {
+                    SettingLabel("Çentiği aç/kapat", "Çentiği açıp kapatan klavye kısayolu")
                 }
-                Picker("Çeviriyi aç (panodan)", selection: $settings.translateShortcutID) {
+                Picker(selection: $settings.translateShortcutID) {
                     ForEach(SettingsStore.translateOptions) { Text($0.label).tag($0.id) }
+                } label: {
+                    SettingLabel("Çeviriyi aç (panodan)", "Panodaki metni çeviri sekmesinde açan kısayol")
                 }
             }
         }

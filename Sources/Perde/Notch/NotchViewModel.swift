@@ -54,6 +54,20 @@ enum NotchTab: CaseIterable {
         case .monitor: return "Sistem"
         }
     }
+
+    var help: String {
+        switch self {
+        case .music: return "Apple Music / Spotify oynatıcı — kontrol ve şarkı sözleri"
+        case .translate: return "Apple çeviri — 19 dil, panodan otomatik doldurma"
+        case .timer: return "Geri sayım ve Pomodoro"
+        case .clipboard: return "Kopyalananların geçmişi — ara, sabitle"
+        case .mixer: return "Uygulama başına ses seviyesi, sessize alma, çıkış yönlendirme"
+        case .output: return "Sistem ses çıkış cihazını değiştir"
+        case .keepAwake: return "Ekranı uyanık tut, uykuyu engelle"
+        case .color: return "Ekrandan renk al, HEX kopyala"
+        case .monitor: return "CPU, bellek ve batarya durumu"
+        }
+    }
 }
 
 @MainActor
