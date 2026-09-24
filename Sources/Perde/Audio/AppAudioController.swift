@@ -8,10 +8,20 @@ final class AppAudioController {
     private var tapID: AudioObjectID = 0
     private var aggID: AudioDeviceID = 0
     private var procID: AudioDeviceIOProcID?
-    nonisolated(unsafe) private var gain: Float = 1.0
+    private let gainPtr: UnsafeMutablePointer<Float>
     private var activeOutputUID: String?
 
-    init(objectIDs: [UInt32]) { self.objectIDs = objectIDs }
+    init(objectIDs: [UInt32]) {
+        self.objectIDs = objectIDs
+        gainPtr = UnsafeMutablePointer<Float>.allocate(capacity: 1)
+        gainPtr.initialize(to: 1.0)
+    }
+
+    isolated deinit {
+        teardown()
+        gainPtr.deinitialize(count: 1)
+        gainPtr.deallocate()
+    }
 
     nonisolated static func effectiveGain(_ setting: AppAudioSetting) -> Float {
         if setting.muted { return 0 }
@@ -19,7 +29,7 @@ final class AppAudioController {
     }
 
     func apply(_ setting: AppAudioSetting) {
-        gain = Self.effectiveGain(setting)
+        gainPtr.pointee = Self.effectiveGain(setting)
         if setting.isDefault { teardown(); return }
         let outUID = setting.outputDeviceUID ?? OutputDevices.defaultUID()
         if activeOutputUID == nil || outUID != activeOutputUID {
@@ -60,8 +70,15 @@ final class AppAudioController {
             teardown(); return
         }
 
-        let status = AudioDeviceCreateIOProcIDWithBlock(&procID, aggID, nil) { [weak self] _, inData, _, outData, _ in
-            let g = self?.gain ?? 0
+        let status = AudioDeviceCreateIOProcIDWithBlock(&procID, aggID, nil, Self.makeIOBlock(gainPtr: gainPtr))
+        guard status == noErr, let procID else { teardown(); return }
+        AudioDeviceStart(aggID, procID)
+        activeOutputUID = outputUID
+    }
+
+    nonisolated private static func makeIOBlock(gainPtr: UnsafeMutablePointer<Float>) -> AudioDeviceIOBlock {
+        { _, inData, _, outData, _ in
+            let g = gainPtr.pointee
             let inABL = UnsafeMutableAudioBufferListPointer(UnsafeMutablePointer(mutating: inData))
             let outABL = UnsafeMutableAudioBufferListPointer(outData)
             for i in 0..<min(inABL.count, outABL.count) {
@@ -74,9 +91,6 @@ final class AppAudioController {
                 if outABL[i].mDataByteSize > bytes { memset(d.advanced(by: Int(bytes)), 0, Int(outABL[i].mDataByteSize - bytes)) }
             }
         }
-        guard status == noErr, let procID else { teardown(); return }
-        AudioDeviceStart(aggID, procID)
-        activeOutputUID = outputUID
     }
 
     private func tapUIDString() -> String? {
