@@ -11,7 +11,7 @@ struct TimerView: View {
     }
 
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 8) {
             SectionHeader(title: "ZAMANLAYICI", help: "Geri sayım ve Pomodoro")
             header
 
@@ -31,7 +31,7 @@ struct TimerView: View {
                         .foregroundStyle(Theme.tertiaryText)
                 }
             }
-            .frame(width: 108, height: 108)
+            .frame(width: 92, height: 92)
 
             if !store.pomodoroEnabled {
                 presetRow
@@ -42,7 +42,7 @@ struct TimerView: View {
                 IconButton(system: store.isRunning ? "pause.fill" : "play.fill", size: 24, color: Theme.primaryText, action: store.toggle)
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private var header: some View {
