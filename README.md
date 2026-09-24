@@ -52,6 +52,23 @@ Dock'ta ikonu yoktur.
 - ⌨️ **Global kısayollar**, girişte otomatik başlatma, çoklu monitör, tam ekranda
   gizlenme.
 
+### 🔮 Yakında (Roadmap)
+
+Referans menü‑çubuğu araçlarında en çok kullanılan, Perde'nin doğal devamı olan
+planlanan özellikler:
+
+- 🪟 **Pencere yönetimi** — snap/yerleşim (yarım, çeyrek, grid) kısayolla
+- 🗑️ **Uninstaller** — uygulamayı kalıntılarıyla birlikte kaldır
+- 📸 **Ekran görüntüsü / kayıt** — bölge veya pencere, hızlı
+- 🔆 **Parlaklık kontrolü** — harici monitör dahil (DDC)
+- ⌨️ **Metin snippet** — kısaltma → uzun metin genişletme
+- 📎 **Shelf** — dosya rafı (geçici park + sürükle‑bırak)
+- 📝 **Scratchpad** — hızlı not
+- 🎙️ **Giriş cihazı seçici** — mikrofon seç / sessize al
+- 🎬 **Live Activities** — çentikte indirme / şarj / zamanlayıcı canlı
+- 📅 **Takvim** — sıradaki toplantı + tek tıkla katıl
+- 📦 **Dağıtım** — Homebrew Cask, otomatik güncelleme, notarization
+
 ### 📸 Ekran görüntüleri
 
 | Müzik | Çeviri |
