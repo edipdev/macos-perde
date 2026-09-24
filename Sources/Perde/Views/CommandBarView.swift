@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CommandBarView: View {
     let items: [CommandItem]
+    let recents: [String]
     let onRun: (CommandItem) -> Void
     let onClose: () -> Void
 
@@ -10,8 +11,21 @@ struct CommandBarView: View {
     @FocusState private var focused: Bool
 
     private var filtered: [CommandItem] {
-        guard !query.isEmpty else { return items }
-        return items.filter { $0.title.localizedCaseInsensitiveContains(query) }
+        guard !query.isEmpty else {
+            let recentItems = recents.compactMap { title in items.first { $0.title == title } }
+            let remainingItems = items.filter { item in !recents.contains(item.title) }
+            return recentItems + remainingItems
+        }
+        return items
+            .compactMap { item -> (CommandItem, Int)? in
+                guard let score = CommandMatcher.fuzzyScore(query, item.title) else { return nil }
+                return (item, score)
+            }
+            .sorted { lhs, rhs in
+                if lhs.1 != rhs.1 { return lhs.1 > rhs.1 }
+                return lhs.0.title < rhs.0.title
+            }
+            .map(\.0)
     }
 
     var body: some View {

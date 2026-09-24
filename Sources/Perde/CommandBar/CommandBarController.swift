@@ -7,6 +7,14 @@ final class CommandBarController {
 
     private var panel: NSPanel?
     private var resignObserver: NSObjectProtocol?
+    private var recents: [String]
+
+    private static let recentsKey = "perde.commandRecents"
+    private static let recentsCap = 5
+
+    init() {
+        recents = UserDefaults.standard.stringArray(forKey: Self.recentsKey) ?? []
+    }
 
     func toggle() {
         if panel?.isVisible == true {
@@ -23,8 +31,10 @@ final class CommandBarController {
         let items = itemsProvider?() ?? []
         let view = CommandBarView(
             items: items,
+            recents: recents,
             onRun: { [weak self] item in
                 item.action()
+                self?.recordRun(item.title)
                 self?.hide()
             },
             onClose: { [weak self] in self?.hide() }
@@ -46,6 +56,15 @@ final class CommandBarController {
 
     func hide() {
         panel?.orderOut(nil)
+    }
+
+    private func recordRun(_ title: String) {
+        recents.removeAll { $0 == title }
+        recents.insert(title, at: 0)
+        if recents.count > Self.recentsCap {
+            recents.removeLast(recents.count - Self.recentsCap)
+        }
+        UserDefaults.standard.set(recents, forKey: Self.recentsKey)
     }
 
     private func makePanel() -> NSPanel {
