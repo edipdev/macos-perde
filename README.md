@@ -160,6 +160,23 @@ translator, timer and clipboard manager — all in one place. No Dock icon.
 - 🎨 **Themes** — Black or Light; selectable **accent color**.
 - ⌨️ **Global shortcuts**, launch at login, multi‑monitor, hide in fullscreen.
 
+### 🔮 Coming soon (Roadmap)
+
+Planned features most common in reference menu‑bar toolkits, and Perde's
+natural next steps:
+
+- 🪟 **Window management** — snap/layouts (halves, quarters, grid) via shortcuts
+- 🗑️ **Uninstaller** — remove an app with its leftovers
+- 📸 **Screenshot / recording** — region or window, quick
+- 🔆 **Brightness control** — external displays too (DDC)
+- ⌨️ **Text snippets** — abbreviation → expansion
+- 📎 **Shelf** — temporary file parking + drag‑and‑drop
+- 📝 **Scratchpad** — quick notes
+- 🎙️ **Input device picker** — pick / mute the microphone
+- 🎬 **Live Activities** — downloads / charging / timer live in the notch
+- 📅 **Calendar** — next meeting + one‑click join
+- 📦 **Distribution** — Homebrew Cask, auto‑update, notarization
+
 ### 📸 Screenshots
 
 | Music | Translate |
