@@ -5,15 +5,15 @@ struct TabBarView: View {
     var tabs: [NotchTab] = NotchTab.allCases
 
     var body: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: 2) {
             ForEach(tabs, id: \.self) { tab in
                 Button {
                     selected = tab
                 } label: {
                     Image(systemName: tab.icon)
-                        .font(.system(size: 12, weight: .semibold))
+                        .font(.system(size: 11, weight: .semibold))
                         .foregroundStyle(selected == tab ? Theme.primaryText : Theme.tertiaryText)
-                        .frame(width: 44, height: 24)
+                        .frame(width: 32, height: 24)
                         .background(
                             RoundedRectangle(cornerRadius: 8, style: .continuous)
                                 .fill(selected == tab ? Color.primary.opacity(0.15) : .clear)

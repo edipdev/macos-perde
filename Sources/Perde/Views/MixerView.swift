@@ -6,9 +6,7 @@ struct MixerView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("SES MİKSERİ")
-                .font(.system(size: 10, weight: .bold))
-                .foregroundStyle(Theme.tertiaryText)
+            SectionHeader(title: "SES MİKSERİ", help: "Uygulama başına ses seviyesi, sessize alma, çıkış yönlendirme")
 
             if store.rows.isEmpty {
                 Spacer()

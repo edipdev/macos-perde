@@ -30,6 +30,7 @@ struct TranslationView: View {
 
     var body: some View {
         VStack(spacing: 9) {
+            SectionHeader(title: "ÇEVİRİ", help: "Apple çeviri — 19 dil, panodan otomatik doldurma")
             languageRow
             if source == "auto", !detectedName.isEmpty {
                 HStack(spacing: 4) {

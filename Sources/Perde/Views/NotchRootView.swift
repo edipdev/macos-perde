@@ -69,7 +69,7 @@ struct NotchRootView: View {
         .frame(width: cardSize.width, height: cardSize.height)
         .environment(\.colorScheme, (settings.theme == .light && viewModel.isExpanded) ? .light : .dark)
         .animation(.spring(response: 0.34, dampingFraction: 0.82), value: viewModel.isExpanded)
-        .animation(.spring(response: 0.30, dampingFraction: 0.86), value: viewModel.selectedTab)
+        .animation(.easeInOut(duration: 0.2), value: viewModel.selectedTab)
     }
 
     @ViewBuilder

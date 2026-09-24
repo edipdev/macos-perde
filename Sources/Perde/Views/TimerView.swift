@@ -12,6 +12,7 @@ struct TimerView: View {
 
     var body: some View {
         VStack(spacing: 12) {
+            SectionHeader(title: "ZAMANLAYICI", help: "Geri sayım ve Pomodoro")
             header
 
             ZStack {

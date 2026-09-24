@@ -6,9 +6,7 @@ struct ColorPickerView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("RENK SEÇİCİ")
-                .font(.system(size: 10, weight: .bold))
-                .foregroundStyle(Theme.tertiaryText)
+            SectionHeader(title: "RENK SEÇİCİ", help: "Ekrandan renk al, HEX kopyala")
 
             pickButton
 

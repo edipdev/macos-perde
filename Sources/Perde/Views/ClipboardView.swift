@@ -17,6 +17,7 @@ struct ClipboardView: View {
 
     var body: some View {
         VStack(spacing: 8) {
+            SectionHeader(title: "PANO", help: "Kopyalananların geçmişi — ara, sabitle")
             searchField
 
             if filtered.isEmpty {

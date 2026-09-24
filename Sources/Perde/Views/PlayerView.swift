@@ -19,6 +19,7 @@ struct PlayerView: View {
 
     var body: some View {
         VStack(spacing: 12) {
+            SectionHeader(title: "MÜZİK", help: "Apple Music / Spotify oynatıcı — kontrol ve şarkı sözleri")
             header
             seekBar
             transport

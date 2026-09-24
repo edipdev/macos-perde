@@ -5,9 +5,7 @@ struct SystemMonitorView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("SİSTEM")
-                .font(.system(size: 10, weight: .bold))
-                .foregroundStyle(Theme.tertiaryText)
+            SectionHeader(title: "SİSTEM", help: "CPU, bellek ve batarya durumu")
 
             metricRow(label: "CPU", value: store.cpu, valueText: percentText(store.cpu))
             metricRow(label: "Bellek", value: store.memory, valueText: percentText(store.memory))

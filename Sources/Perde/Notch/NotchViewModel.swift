@@ -11,7 +11,7 @@ enum NotchTab: CaseIterable {
     case color
     case monitor
 
-    static let defaultEnabled: [NotchTab] = [.music, .translate, .timer, .clipboard, .mixer]
+    static let defaultEnabled: [NotchTab] = NotchTab.allCases
 
     var icon: String {
         switch self {

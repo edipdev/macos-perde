@@ -5,9 +5,7 @@ struct OutputSwitcherView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("SES ÇIKIŞI")
-                .font(.system(size: 10, weight: .bold))
-                .foregroundStyle(Theme.tertiaryText)
+            SectionHeader(title: "SES ÇIKIŞI", help: "Sistem ses çıkış cihazını değiştir")
 
             if store.devices.isEmpty {
                 Spacer()

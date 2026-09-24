@@ -5,9 +5,7 @@ struct KeepAwakeView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("KAFEİN")
-                .font(.system(size: 10, weight: .bold))
-                .foregroundStyle(Theme.tertiaryText)
+            SectionHeader(title: "KAFEİN", help: "Ekranı uyanık tut, uykuyu engelle")
 
             statusView
 
