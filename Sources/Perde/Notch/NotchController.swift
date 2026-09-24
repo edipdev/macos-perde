@@ -10,6 +10,8 @@ final class NotchController {
     private var window: NotchWindow?
     private var collapseWorkItem: DispatchWorkItem?
     private var forceOpen = false
+    private var commandReveal = false
+    private var revealEntered = false
     private var cancellables = Set<AnyCancellable>()
 
     init() {
@@ -46,6 +48,8 @@ final class NotchController {
     }
 
     func toggleViaHotKey() {
+        commandReveal = false
+        revealEntered = false
         forceOpen.toggle()
         if forceOpen {
             collapseWorkItem?.cancel(); collapseWorkItem = nil
@@ -61,6 +65,8 @@ final class NotchController {
 
     func openTranslate() {
         forceOpen = true
+        commandReveal = false
+        revealEntered = false
         collapseWorkItem?.cancel(); collapseWorkItem = nil
         viewModel.selectedTab = .translate
         window?.ignoresMouseEvents = false
@@ -69,6 +75,8 @@ final class NotchController {
 
     func open(_ tab: NotchTab) {
         forceOpen = true
+        commandReveal = true
+        revealEntered = false
         collapseWorkItem?.cancel(); collapseWorkItem = nil
         viewModel.selectedTab = tab
         window?.ignoresMouseEvents = false
@@ -86,8 +94,20 @@ final class NotchController {
     }
 
     private func handleMouse(at location: CGPoint) {
-        if forceOpen { return }
         let screen = targetScreen()
+        if forceOpen {
+            guard commandReveal else { return }
+            let card = NotchGeometry.cardRect(screenFrame: screen.frame, size: currentCardSize)
+                .insetBy(dx: -14, dy: -14)
+            if card.contains(location) {
+                revealEntered = true
+                return
+            }
+            guard revealEntered else { return }
+            forceOpen = false
+            commandReveal = false
+            revealEntered = false
+        }
         let shouldExpand: Bool
 
         if viewModel.isExpanded {
