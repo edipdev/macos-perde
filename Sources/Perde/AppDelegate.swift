@@ -35,6 +35,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         settings.$commandBarEnabled.dropFirst()
             .sink { [weak self] _ in DispatchQueue.main.async { self?.applyHotKeys() } }
             .store(in: &cancellables)
+
+        KeepAwakeStore.shared.$isActive.dropFirst()
+            .sink { [weak self] isActive in
+                DispatchQueue.main.async { self?.updateStatusItemIcon(isActive: isActive) }
+            }
+            .store(in: &cancellables)
     }
 
     private func setupMainMenu() {
@@ -114,6 +120,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(withTitle: "Çıkış", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         item.menu = menu
         statusItem = item
+    }
+
+    private func updateStatusItemIcon(isActive: Bool) {
+        statusItem?.button?.image = isActive
+            ? NSImage(systemSymbolName: "cup.and.saucer.fill", accessibilityDescription: "Kafein açık")
+            : NSImage(systemSymbolName: "chevron.compact.down", accessibilityDescription: "Perde")
     }
 
     @objc private func openSettings() {

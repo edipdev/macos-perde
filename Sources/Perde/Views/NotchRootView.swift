@@ -23,7 +23,9 @@ struct NotchRootView: View {
 
     private var enabledTabs: [NotchTab] { NotchTab.allCases.filter { settings.isEnabled($0) } }
 
-    private var hasCollapsedContent: Bool { nowPlaying.snapshot != nil || timerStore.isRunning }
+    private var hasCollapsedContent: Bool {
+        nowPlaying.snapshot != nil || timerStore.isRunning || keepAwakeStore.isActive
+    }
 
     private var cardSize: CGSize {
         if viewModel.isExpanded {
@@ -113,14 +115,19 @@ struct NotchRootView: View {
 
     @ViewBuilder
     private var rightEar: some View {
-        if timerStore.isRunning {
-
-            MiniTimerRing(remaining: timerStore.remaining, size: min(max(topInset - 8, 22), 30))
-                .padding(.trailing, 12)
-        } else if let snapshot = nowPlaying.snapshot {
-            MiniEqualizer(isPlaying: snapshot.isPlaying, barCount: 3)
-                .padding(.trailing, 12)
+        HStack(spacing: 6) {
+            if timerStore.isRunning {
+                MiniTimerRing(remaining: timerStore.remaining, size: min(max(topInset - 8, 22), 30))
+            } else if let snapshot = nowPlaying.snapshot {
+                MiniEqualizer(isPlaying: snapshot.isPlaying, barCount: 3)
+            }
+            if keepAwakeStore.isActive {
+                Image(systemName: "cup.and.saucer.fill")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(Theme.accent)
+            }
         }
+        .padding(.trailing, 12)
     }
 
     private var expandedContent: some View {
