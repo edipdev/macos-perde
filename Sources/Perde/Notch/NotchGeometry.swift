@@ -22,6 +22,7 @@ enum NotchGeometry {
         case .timer: return CGSize(width: 360, height: 278)
         case .clipboard: return CGSize(width: 420, height: 300)
         case .mixer: return CGSize(width: 420, height: 300)
+        case .output: return CGSize(width: 380, height: 260)
         }
     }
 

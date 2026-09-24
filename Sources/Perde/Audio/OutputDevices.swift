@@ -30,6 +30,17 @@ enum OutputDevices {
         return string(dev, kAudioDevicePropertyDeviceUID)
     }
 
+    static func setDefaultOutput(uid: String) {
+        var addr = AudioObjectPropertyAddress(mSelector: kAudioHardwarePropertyDevices, mScope: kAudioObjectPropertyScopeGlobal, mElement: kAudioObjectPropertyElementMain)
+        var size: UInt32 = 0
+        guard AudioObjectGetPropertyDataSize(sys, &addr, 0, nil, &size) == noErr else { return }
+        var ids = [AudioDeviceID](repeating: 0, count: Int(size) / MemoryLayout<AudioDeviceID>.size)
+        guard AudioObjectGetPropertyData(sys, &addr, 0, nil, &size, &ids) == noErr else { return }
+        guard var match = ids.first(where: { string($0, kAudioDevicePropertyDeviceUID) == uid }) else { return }
+        var setAddr = AudioObjectPropertyAddress(mSelector: kAudioHardwarePropertyDefaultOutputDevice, mScope: kAudioObjectPropertyScopeGlobal, mElement: kAudioObjectPropertyElementMain)
+        AudioObjectSetPropertyData(sys, &setAddr, 0, nil, UInt32(MemoryLayout<AudioDeviceID>.size), &match)
+    }
+
     private static func hasOutput(_ dev: AudioDeviceID) -> Bool {
         var addr = AudioObjectPropertyAddress(mSelector: kAudioDevicePropertyStreamConfiguration, mScope: kAudioObjectPropertyScopeOutput, mElement: kAudioObjectPropertyElementMain)
         var size: UInt32 = 0

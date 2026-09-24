@@ -6,6 +6,9 @@ enum NotchTab: CaseIterable {
     case timer
     case clipboard
     case mixer
+    case output
+
+    static let defaultEnabled: [NotchTab] = [.music, .translate, .timer, .clipboard, .mixer]
 
     var icon: String {
         switch self {
@@ -14,6 +17,7 @@ enum NotchTab: CaseIterable {
         case .timer: return "timer"
         case .clipboard: return "doc.on.clipboard"
         case .mixer: return "slider.vertical.3"
+        case .output: return "hifispeaker.fill"
         }
     }
 
@@ -24,6 +28,7 @@ enum NotchTab: CaseIterable {
         case .timer: return "timer"
         case .clipboard: return "clipboard"
         case .mixer: return "mixer"
+        case .output: return "output"
         }
     }
 
@@ -34,6 +39,7 @@ enum NotchTab: CaseIterable {
         case .timer: return "Zamanlayıcı"
         case .clipboard: return "Pano"
         case .mixer: return "Ses Mikseri"
+        case .output: return "Ses Çıkışı"
         }
     }
 }

@@ -92,7 +92,7 @@ final class SettingsStore: ObservableObject {
         if let saved = UserDefaults.standard.array(forKey: Keys.tabs) as? [String], !saved.isEmpty {
             enabledTabIDs = Set(saved)
         } else {
-            enabledTabIDs = Set(NotchTab.allCases.map(\.id))
+            enabledTabIDs = Set(NotchTab.defaultEnabled.map(\.id))
         }
         switch UserDefaults.standard.string(forKey: Keys.theme) {
         case "light", "mac", "transparent": theme = .light
