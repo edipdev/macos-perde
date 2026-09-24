@@ -3,6 +3,7 @@ import SwiftUI
 struct SettingLabel: View {
     let title: String
     let help: String
+    @State private var show = false
 
     init(_ title: String, _ help: String) {
         self.title = title
@@ -15,8 +16,13 @@ struct SettingLabel: View {
             Image(systemName: "info.circle")
                 .font(.system(size: 11))
                 .foregroundStyle(.secondary)
+                .onHover { show = $0 }
+                .popover(isPresented: $show, arrowEdge: .bottom) {
+                    Text(help)
+                        .font(.system(size: 12))
+                        .padding(10)
+                        .frame(width: 220)
+                }
         }
-        .contentShape(Rectangle())
-        .help(help)
     }
 }
