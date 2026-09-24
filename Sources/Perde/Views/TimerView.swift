@@ -42,7 +42,7 @@ struct TimerView: View {
                 IconButton(system: store.isRunning ? "pause.fill" : "play.fill", size: 24, color: Theme.primaryText, action: store.toggle)
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 
     private var header: some View {
