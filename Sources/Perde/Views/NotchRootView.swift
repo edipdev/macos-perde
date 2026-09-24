@@ -9,6 +9,7 @@ struct NotchRootView: View {
     @StateObject private var clipboardStore = ClipboardStore()
     @ObservedObject private var mixerStore = AudioMixerStore.shared
     @StateObject private var outputStore = OutputSwitcherStore()
+    @StateObject private var keepAwakeStore = KeepAwakeStore()
 
     init(viewModel: NotchViewModel) {
         self.viewModel = viewModel
@@ -138,6 +139,8 @@ struct NotchRootView: View {
                 MixerView(store: mixerStore)
             case .output:
                 OutputSwitcherView(store: outputStore)
+            case .keepAwake:
+                KeepAwakeView(store: keepAwakeStore)
             }
         }
         .padding(.horizontal, 16)
