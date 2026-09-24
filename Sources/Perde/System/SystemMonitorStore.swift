@@ -13,6 +13,7 @@ final class SystemMonitorStore: ObservableObject {
 
     private var previous = SystemMetrics.cpuTicks()
     private var previousNet = SystemMetrics.netCounters()
+    private var lastNetSample = Date()
     private var timer: Timer?
     private var started = false
 
@@ -20,6 +21,8 @@ final class SystemMonitorStore: ObservableObject {
         guard !started else { return }
         started = true
         sample()
+        previousNet = SystemMetrics.netCounters()
+        lastNetSample = Date()
         let t = Timer(timeInterval: 1.0, repeats: true) { [weak self] _ in
             MainActor.assumeIsolated { self?.sample() }
         }
@@ -42,7 +45,9 @@ final class SystemMonitorStore: ObservableObject {
         charging = SystemMetrics.batteryCharging()
 
         let nowNet = SystemMetrics.netCounters()
-        let speed = SystemMetrics.netSpeed(previous: previousNet, current: nowNet, seconds: 1)
+        let elapsed = Date().timeIntervalSince(lastNetSample)
+        lastNetSample = Date()
+        let speed = SystemMetrics.netSpeed(previous: previousNet, current: nowNet, seconds: max(elapsed, 0.001))
         download = speed.down
         upload = speed.up
         previousNet = nowNet
