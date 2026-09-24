@@ -11,7 +11,7 @@ _A notch‑based multi‑tool for macOS._
 ![Swift](https://img.shields.io/badge/Swift-6-orange?logo=swift)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
-[![Download](https://img.shields.io/badge/⬇%20İndir-Perde%20v0.1.0%20(.dmg)-brightgreen)](https://github.com/edipdev/macos-perde/releases/download/0.1.0/Perde-0.1.0.dmg)
+[![Download](https://img.shields.io/badge/⬇%20İndir-Perde%20v0.2.0%20(.dmg)-brightgreen)](https://github.com/edipdev/macos-perde/releases/download/0.2.0/Perde-0.2.0.dmg)
 
 [Türkçe](#türkçe) · [English](#english)
 
@@ -38,6 +38,16 @@ Dock'ta ikonu yoktur.
   (çalış/mola otomatik döngü + seans sayacı). Kapalıyken çentikte mini halka.
 - 📋 **Pano** — kopyalananların aranabilir geçmişi; **sabitleme**, link ve görsel
   önizleme.
+- 🎚️ **Ses Mikseri** — uygulama başına ses seviyesi, sessize alma, farklı çıkışa
+  yönlendirme, **%200'e kadar boost** ve favori sabitleme (sürücüsüz, Core Audio
+  process taps).
+- 🔊 **Ses Çıkışı** — sistem ses çıkış cihazını çentikten anında değiştir.
+- ☕ **Kafein** — ekranı uyanık tut (15dk/30dk/1s/süresiz + sayaç); çentikte ve menü
+  çubuğunda aktif göstergesi.
+- 🎨 **Renk Seçici** — ekrandan renk al, HEX'i panoya kopyala, son renkler.
+- 📊 **Sistem** — CPU, bellek, batarya, **ağ hızı, disk ve sıcaklık** canlı.
+- ⌘ **Komut Çubuğu** — `⌥Space` ile Spotlight tarzı overlay; fuzzy arama, son
+  komutlar, tüm eylemleri tetikler.
 - 🎨 **Tema** — Siyah veya Açık; seçilebilir **vurgu rengi**.
 - ⌨️ **Global kısayollar**, girişte otomatik başlatma, çoklu monitör, tam ekranda
   gizlenme.
@@ -54,7 +64,7 @@ Dock'ta ikonu yoktur.
 
 <p align="center"><img src="docs/install.gif" width="640" alt="Perde kurulum videosu" /></p>
 
-**Hazır uygulama:** [**Perde-0.1.0.dmg indir**](https://github.com/edipdev/macos-perde/releases/download/0.1.0/Perde-0.1.0.dmg) →
+**Hazır uygulama:** [**Perde-0.2.0.dmg indir**](https://github.com/edipdev/macos-perde/releases/download/0.2.0/Perde-0.2.0.dmg) →
 aç ve **Perde**'yi `Applications` klasörüne sürükle. (Tüm sürümler için [Releases](https://github.com/edipdev/macos-perde/releases).)
 
 #### ⚠️ "Perde.app Açılmadı" uyarısı alıyorsan
@@ -121,6 +131,15 @@ translator, timer and clipboard manager — all in one place. No Dock icon.
 - ⏱ **Timer** — ring countdown, custom duration and **Pomodoro** (auto work/break
   cycle + session counter). Mini ring in the collapsed notch.
 - 📋 **Clipboard** — searchable history with **pinning**, link and image previews.
+- 🎚️ **Volume Mixer** — per‑app volume, mute, route to a different output device,
+  **boost up to 200%**, and favorite pinning (no driver, Core Audio process taps).
+- 🔊 **Audio Output** — switch the system output device right from the notch.
+- ☕ **Caffeine** — keep the screen awake (15m/30m/1h/indefinite + countdown); active
+  indicator in the notch and menu bar.
+- 🎨 **Color Picker** — sample a color from the screen, copy HEX, recent colors.
+- 📊 **System** — live CPU, memory, battery, **network speed, disk and temperature**.
+- ⌘ **Command Bar** — Spotlight‑style overlay via `⌥Space`; fuzzy search, recent
+  commands, triggers every action.
 - 🎨 **Themes** — Black or Light; selectable **accent color**.
 - ⌨️ **Global shortcuts**, launch at login, multi‑monitor, hide in fullscreen.
 
@@ -136,7 +155,7 @@ translator, timer and clipboard manager — all in one place. No Dock icon.
 
 <p align="center"><img src="docs/install.gif" width="640" alt="Perde install walkthrough" /></p>
 
-**Prebuilt app:** [**Download Perde-0.1.0.dmg**](https://github.com/edipdev/macos-perde/releases/download/0.1.0/Perde-0.1.0.dmg) →
+**Prebuilt app:** [**Download Perde-0.2.0.dmg**](https://github.com/edipdev/macos-perde/releases/download/0.2.0/Perde-0.2.0.dmg) →
 open it and drag **Perde** into your `Applications` folder. (All versions on [Releases](https://github.com/edipdev/macos-perde/releases).)
 
 #### ⚠️ Seeing "Perde.app can't be opened"?
